@@ -1,24 +1,24 @@
 provider "aws" {
-  region = "us-east-1"
+  region = var.region
 }
 
 terraform {
   backend "s3" {
-    bucket = "current-epoch-time-tfstate"
-    key    = "ecs/terraform.tfstate"
-    region = "us-east-1"
+    bucket = var.s3_bucket
+    key    = var.s3_key
+    region = var.region
   }
 }
 
 module "ecr" {
   source = "./ecr"
-  repository_name = "current-epoch-time"
+  repository_name = var.name
 }
 
 module "ecs" {
   source = "./ecs"
-  cluster_name = "current-epoch-time"
+  cluster_name = var.name
   ecr_repository_url = module.ecr.repository_url
-  subnet_ids = ["subnet-cf603085", "subnet-2da82571", "subnet-f5fc7c92", "subnet-a89e1186", "subnet-141fcb2a","subnet-25760c2a"]
-  vpc_id = "vpc-7c9b4706"
+  subnet_ids = var.subnet_ids
+  vpc_id = var.vpc_id
 }
