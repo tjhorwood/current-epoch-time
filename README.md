@@ -4,7 +4,7 @@ This guide will walk you through the steps to deploy a Flask application on AWS 
 
 ## Prerequisites
 
-- AWS Account with administrator access
+- Authenticated to an AWS Account with administrator access
 - Terraform installed on your machine
 - Docker installed on your machine
 
@@ -22,36 +22,16 @@ This guide will walk you through the steps to deploy a Flask application on AWS 
 aws configure
 ```
 
-## Create S3 bucket for Terraform state
-
-```bash
-aws s3api create-bucket --bucket current-epoch-time-tfstate --region us-east-1
-aws s3api put-bucket-versioning --bucket current-epoch-time-tfstate --versioning-configuration Status=Enabled
-```
-
-## Initialize Terraform
+## Update Terraform Variables
 
 ```bash
 cd terraform
-terraform init
-terraform plan -out=plan.tfplan
-terraform apply "plan.tfplan"
+vim main.tf
 ```
 
-## Create ECR repository
+## Run Deploy Script
 
 ```bash
-cd terraform/ecr
-terraform init
-terraform plan -out=plan.tfplan
-terraform apply "plan.tfplan"
-```
-
-## Build and push Docker image to ECR repository
-
-```bash
-$(aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 652136470530.dkr.ecr.us-east-1.amazonaws.com)
-docker build -t current-epoch-time .
-docker tag current-epoch-time:latest ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPOSITORY}:${TAG}
-docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPOSITORY}:${TAG}
+chmod +x deploy.sh
+./deploy.sh
 ```
