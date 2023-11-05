@@ -1,4 +1,4 @@
-resource "aws_lb" "app_lb" {
+resource "aws_lb" "network_lb" {
   name               = "${var.cluster_name}-lb"
   internal           = false
   load_balancer_type = "network"
@@ -14,7 +14,7 @@ resource "aws_lb_target_group" "app_tg" {
 }
 
 resource "aws_lb_listener" "front_end" {
-  load_balancer_arn = aws_lb.app_lb.arn
+  load_balancer_arn = aws_lb.network_lb.arn
   port              = "80"
   protocol          = "TCP"
 
