@@ -66,7 +66,7 @@ Run the script using the following command:
 
 ## Usage
 
-Once `deploy.sh` completes, the ECS Cluster will take around 2-3 mins before all ECS Tasks, and all other dependent resources are in a healthy state. Once everything is up and running, the API can be accessed via the endpoint URL provided by Terraform output `load_balancer_dns_name` which will look something like this:
+Once the `deploy.sh` script completes, the ECS Cluster will take around 2-3 mins before the ECS Tasks, and all other dependent resources are in a healthy state. Once everything is up and running, the API can be accessed via the endpoint URL provided in the Terraform output; `load_balancer_dns_name` which will look something like this:
 
 ```bash
 Apply complete! Resources: 20 added, 0 changed, 0 destroyed.
@@ -76,7 +76,7 @@ Outputs:
 load_balancer_dns_name = "current-epoch-time-lb-90ff58d0c69a8719.elb.us-east-1.amazonaws.com"
 ```
 
-Sending a GET request to the root path will return the current epoch time in JSON format.
+Using cURL, sending a GET request to the root path will return the current epoch time in JSON format.
 
 ```bash
 $ curl http://current-epoch-time-lb-90ff58d0c69a8719.elb.us-east-1.amazonaws.com
@@ -85,7 +85,7 @@ $ curl http://current-epoch-time-lb-90ff58d0c69a8719.elb.us-east-1.amazonaws.com
 
 ## Tear Down
 
-If you would like to tear down the created infrastructure, you can do so using Terraform. Before running the following Terraform, you need to make sure the ECR repository is empty or Terraform will fail when attempting to delete it.
+If you would like to tear down the created infrastructure, you can do so using Terraform. Before running the following Terraform commands, you need to make sure the ECR repository is empty or Terraform will fail when attempting to delete it.
 
 ```bash
 cd terraform
