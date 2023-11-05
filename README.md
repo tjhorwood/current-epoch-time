@@ -66,7 +66,22 @@ Run the script using the following command:
 
 ## Usage
 
-Once `deploy.sh` completes successfully, the API can be accessed via the endpoint URL provided by Terraform output `load_balancer_dns_name`. Sending a GET request to the root path will return the current epoch time in JSON format.
+Once `deploy.sh` completes, the ECS Cluster will take around 2-3 mins before all ECS Tasks, and all other dependent resources are in a healthy state. Once everything is up and running, the API can be accessed via the endpoint URL provided by Terraform output `load_balancer_dns_name` which will look something like this:
+
+```bash
+Apply complete! Resources: 20 added, 0 changed, 0 destroyed.
+
+Outputs:
+
+load_balancer_dns_name = "current-epoch-time-lb-90ff58d0c69a8719.elb.us-east-1.amazonaws.com"
+```
+
+Sending a GET request to the root path will return the current epoch time in JSON format.
+
+```bash
+$ curl http://current-epoch-time-lb-90ff58d0c69a8719.elb.us-east-1.amazonaws.com
+{"The current epoch time":1699218884}
+```
 
 ## Tear Down
 
