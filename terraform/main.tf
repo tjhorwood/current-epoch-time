@@ -1,12 +1,12 @@
 provider "aws" {
-  region = var.region
+  region = "us-east-1"
 }
 
 terraform {
   backend "s3" {
-    bucket = var.s3_bucket
-    key    = var.s3_key
-    region = var.region
+    bucket = "current-epoch-time-tfstate"
+    key    = "ecs/terraform.tfstate"
+    region = "us-east-1"
   }
 }
 
