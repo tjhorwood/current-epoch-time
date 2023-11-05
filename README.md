@@ -67,3 +67,14 @@ Run the script using the following command:
 ## Usage
 
 Once `deploy.sh` completes successfully, the API can be accessed via the endpoint URL provided by Terraform output `load_balancer_dns_name`. Sending a GET request to the root path will return the current epoch time in JSON format.
+
+## Tear Down
+
+If you would like to tear down the created infrastructure, you can do so using Terraform. Before running the following Terraform, you need to make sure the ECR repository is empty or Terraform will fail when attempting to delete it.
+
+```bash
+cd terraform
+terraform init
+terraform plan -out=plan.tfplan --destroy
+terraform apply "plan.tfplan"
+```
